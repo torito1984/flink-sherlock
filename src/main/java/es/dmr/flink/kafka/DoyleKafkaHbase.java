@@ -32,14 +32,14 @@ import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
  * 	--topic test --bootstrap.servers localhost:9092 --zookeeper.connect localhost:2181 --group.id myconsumer
  *
  */
-public class DoyleKafka {
+public class DoyleKafkaHbase {
 
 	public static void main(String[] args) throws Exception {
 		// parse input arguments
 		final ParameterTool parameterTool = ParameterTool.fromArgs(args);
 
 		if(parameterTool.getNumberOfParameters() < 4) {
-			System.out.println("Missing parameters!\nUsage: Kafka --topic <topic> " +
+			System.out.println("Missing parameters!\nUsage: Kafka --topic <topic> -- output <outFile>" +
 					"--bootstrap.servers <kafka brokers> --zookeeper.connect <zk quorum> --group.id <some id>");
 			return;
 		}
@@ -65,7 +65,7 @@ public class DoyleKafka {
 				});
 
 		// write kafka stream to standard out.
-		messageStream.print();//writeAsText("hdfs:///user/osboxes/flink-kafka-out");
+		messageStream.writeAsText(parameterTool.getRequired("topic"));
 
 		env.execute("Read from Kafka example");
 	}

@@ -1,0 +1,1 @@
+java -Xmx2500m -cp target/flink-sherlock-1.0.jar es.dmr.flink.kafka.DoyleKafkaPublishTopic $@

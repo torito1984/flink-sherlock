@@ -34,7 +34,7 @@ public class DoyleLocationsWindow {
             text = env.readTextFile(params.get("input"));
             DataStream<Place> counts = text.flatMap(new LocationExtractor()) // extract locations from different episodes
                     .keyBy("place")
-                    //.countWindow(20) // window in order to emit regularly the count
+                    .countWindow(20) // window in order to emit regularly the count (Click to see)
                     .sum("frequency"); // group by the field place and sum up the frequency
             counts.writeAsText(params.get("output"));
             // execute program

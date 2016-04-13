@@ -5,6 +5,7 @@ package es.dmr.flink.nlp;
  */
 
 import es.dmr.flink.model.Place;
+import org.apache.commons.lang.StringUtils;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.util.Collector;
@@ -24,6 +25,7 @@ public final class LocationExtractor extends RichFlatMapFunction<String, Place> 
     @Override
     public void flatMap(String value, Collector<Place> out) {
         // emit the locations detected
-        extractor.getLocations(value).stream().forEach(place -> out.collect(new Place(place, 1)));
+        if(!StringUtils.isEmpty(value))
+            extractor.getLocations(value).stream().forEach(place -> out.collect(new Place(place, 1)));
     }
 }

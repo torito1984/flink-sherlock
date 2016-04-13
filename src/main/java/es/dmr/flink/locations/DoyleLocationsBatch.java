@@ -34,11 +34,12 @@ public class DoyleLocationsBatch {
             // read the text file from given input path
             text = env.readTextFile(params.get("input"));
             text.flatMap(new LocationExtractor()) // extract locations from different episodes
-                    .groupBy("place").reduce(new LocationCounter())
+                    .groupBy("place")
+                    .reduce(new LocationCounter())
                     .writeAsText(params.get("output")); // group by the field place and sum up the frequency
 
             // execute program
-            env.execute("Extraction of Locations from Sherlock");
+            env.execute("Extraction of Locations from Sherlock (Batch)");
         } else {
             System.out.println("Usage: WordCount --input <path> --output <path>");
             System.exit(-1);

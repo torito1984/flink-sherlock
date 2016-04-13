@@ -66,7 +66,6 @@ public class WriteIntoKafka {
 		});
 
 		// write data into Kafka
-		messageStream.addSink(new FlinkKafkaProducer08<>(parameterTool.getRequired("topic"), new SimpleStringSchema(), parameterTool.getProperties()));
 
 		env.execute("Write into Kafka example");
 	}

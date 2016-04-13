@@ -30,9 +30,10 @@ public class WordCount {
 		if (params.has("input") && params.has("output")) {
 			// read the text file from given input path
 			text = env.readTextFile(params.get("input"));
-			DataStream<Tuple2<String, Integer>> counts =
-					text.flatMap(new Tokenizer()) // split up the lines in pairs (2-tuples) containing: (word,1)
-					.keyBy(0).sum(1); 	// group by the tuple field "0" and sum up tuple field "1"
+			DataStream<Tuple2<String, Integer>> counts = text
+					.flatMap(new Tokenizer()) // split up the lines in pairs (2-tuples) containing: (word,1)
+					.keyBy(0) // group by the tuple field "0" and sum up tuple field "1"
+					.sum(1);
 			counts.writeAsText(params.get("output"));
 			// execute program
 			env.execute("Streaming WordCount");

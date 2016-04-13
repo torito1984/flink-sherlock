@@ -32,8 +32,10 @@ public class DoyleLocations {
         if (params.has("input") && params.has("output")) {
             // read the text file from given input path
             text = env.readTextFile(params.get("input"));
-            DataStream<Place> counts = text.flatMap(new LocationExtractor()) // extract locations from different episodes
-                    .keyBy("place").sum("frequency"); // group by the field place and sum up the frequency
+            DataStream<Place> counts = text
+                    .flatMap(new LocationExtractor()) // extract locations from different episodes
+                    .keyBy("place")
+                    .sum("frequency"); // group by the field place and sum up the frequency
             counts.writeAsText(params.get("output"));
             // execute program
             env.execute("Extraction of Locations from Sherlock");
